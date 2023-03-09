@@ -29,6 +29,7 @@ def acquire_employee_head(schema, u=uname, p=pwd, h=host):
 
 def get_titanic_data(schema,u=uname,p=pwd,h=host):
     '''
+    checks to see if .csv file exists as filename.csv
     returns titanic_db.passengers from codeup as a pandas DF
     '''
     filename = "titanic.csv"
