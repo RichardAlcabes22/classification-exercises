@@ -1,8 +1,9 @@
 # inside acquire.py script:
 from env import uname, pwd, host
 import pandas as pd
+import os
 
-def get_connection(db, u=uname, p=pwd, h=host):
+def get_sql_url(db, u=uname, p=pwd, h=host):
     '''
     get_sql_url will pull the credentials present from any current env
     file in the same directory as this acquire script
@@ -21,16 +22,53 @@ def acquire_employee_head(schema, u=uname, p=pwd, h=host):
     as employees due to the query being defined in the scope of the function
     '''
     query = 'SELECT * FROM employees LIMIT 20'
-    url = get_connection(schema, u=u,p=p,h=h)
+    url = get_sql_url(schema, u=u,p=p,h=h)
     return pd.read_sql(query,url)
 
 
 
-def get_titanic_data():
+def get_titanic_data(schema,u=uname,p=pwd,h=host):
     '''
     returns titanic_db.passengers from codeup as a pandas DF
     '''
-    query = 'SELECT * FROM passengers'
-    url = get_connection(schema,u=u, p=p, h=h)
-    return pd.read_sql('SELECT * FROM passengers', get_connection('titanic_db'))
-    
+    filename = "titanic.csv"
+
+    if os.path.isfile(filename):
+        return pd.read_csv(filename)
+    else:
+        query = 'SELECT * FROM passengers'
+        url = get_sql_url(schema,u=u, p=p, h=h)
+        df = pd.read_sql(query, url)
+        df.to_csv(filename)
+        return df
+
+
+def get_iris_data(schema,u=uname,p=pwd,h=host):
+    '''
+    returns iris_db data from codeup as a pandas DF
+    '''
+    filename = "iris.csv"
+
+    if os.path.isfile(filename):
+        return pd.read_csv(filename)
+    else:
+        query = 'SELECT * FROM measurements JOIN species USING(species_id)'
+        url = get_sql_url(schema,u=u, p=p, h=h)
+        df = pd.read_sql(query, url)
+        df.to_csv(filename)
+        return df
+
+def get_telco_data(schema,u=uname,p=pwd,h=host):
+    '''
+    returns telco_db data from codeup as a pandas DF
+    '''
+    filename = "telco.csv"
+
+    if os.path.isfile(filename):
+        return pd.read_csv(filename)
+    else:
+        query = 'SELECT * FROM customers JOIN contract_types USING(contract_type_id) JOIN internet_service_types USING(internet_service_type_id) JOIN payment_types USING(payment_type_id)'
+        url = get_sql_url(schema,u=u, p=p, h=h)
+        df = pd.read_sql(query, url)
+        df.to_csv(filename)
+        return df

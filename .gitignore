@@ -3,4 +3,7 @@ env.py
 .ipynb_checkpoints/
 __pycache__
 *.csv
-train.xlsx
+*.xlsx
+*.xls
+*.xl
+*.txt
