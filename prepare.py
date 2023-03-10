@@ -15,7 +15,7 @@ def prep_iris(df):
  
     df = df.drop(columns=['species_id','measurement_id'])
     df = df.rename(columns={'species_name':'species'},inplace=True)
-    df = pd.concat([df,pd.get_dummies(df['species'],drop_first=True)],axis=1)
+    #df = pd.concat([df,pd.get_dummies(df['species'],drop_first=True)],axis=1)
     return df
 
 def prep_titanic(df):
