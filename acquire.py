@@ -2,6 +2,7 @@
 from env import uname, pwd, host
 import pandas as pd
 import os
+from sklearn.model_selection import train_test_split
 
 def get_sql_url(db, u=uname, p=pwd, h=host):
     '''
@@ -35,12 +36,12 @@ def get_titanic_data(schema,u=uname,p=pwd,h=host):
     filename = "titanic.csv"
 
     if os.path.isfile(filename):
-        return pd.read_csv(filename)
+        return pd.read_csv(filename,index_col=False)
     else:
         query = 'SELECT * FROM passengers'
         url = get_sql_url(schema,u=u, p=p, h=h)
         df = pd.read_sql(query, url)
-        df.to_csv(filename)
+        df.to_csv(filename,index=False)
         return df
 
 
@@ -51,12 +52,12 @@ def get_iris_data(schema,u=uname,p=pwd,h=host):
     filename = "iris.csv"
 
     if os.path.isfile(filename):
-        return pd.read_csv(filename)
+        return pd.read_csv(filename,index_col=False)
     else:
         query = 'SELECT * FROM measurements JOIN species USING(species_id)'
         url = get_sql_url(schema,u=u, p=p, h=h)
         df = pd.read_sql(query, url)
-        df.to_csv(filename)
+        df.to_csv(filename,index=False)
         return df
 
 def get_telco_data(schema,u=uname,p=pwd,h=host):
@@ -66,10 +67,11 @@ def get_telco_data(schema,u=uname,p=pwd,h=host):
     filename = "telco.csv"
 
     if os.path.isfile(filename):
-        return pd.read_csv(filename)
+        return pd.read_csv(filename,index_col=False)
     else:
         query = 'SELECT * FROM customers JOIN contract_types USING(contract_type_id) JOIN internet_service_types USING(internet_service_type_id) JOIN payment_types USING(payment_type_id)'
         url = get_sql_url(schema,u=u, p=p, h=h)
         df = pd.read_sql(query, url)
-        df.to_csv(filename)
+        df.to_csv(filename,index=False)
         return df
+
