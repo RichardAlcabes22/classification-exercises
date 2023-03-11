@@ -14,8 +14,8 @@ def prep_iris(df):
     '''
  
     df = df.drop(columns=['species_id','measurement_id'])
-    df = df.rename(columns={'species_name':'species'},inplace=True)
-    #df = pd.concat([df,pd.get_dummies(df['species'],drop_first=True)],axis=1)
+    df = df.rename(columns={'species_name':'species'})
+    df = pd.concat([df,pd.get_dummies(df['species'],drop_first=True)],axis=1)
     return df
 
 def prep_titanic(df):
@@ -39,7 +39,7 @@ def prep_telco(df):
     '''
     
     #drop out any redundant, excessively empty, or bad columns
-    df = df.drop(columns=['Unnamed: 0','payment_type_id','internet_service_type_id','contract_type_id'])
+    df = df.drop(columns=['payment_type_id','internet_service_type_id','contract_type_id'])
 
     # encode categorical values:
     df = pd.concat(
