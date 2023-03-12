@@ -13,6 +13,8 @@ def get_sql_url(db, u=uname, p=pwd, h=host):
     '''
     return f'mysql+pymysql://{u}:{p}@{h}/{db}'
 
+#-----------------------------------------------------------
+
 def acquire_employee_head(schema, u=uname, p=pwd, h=host):
     '''
     acquire_employee_head will grab the first 20 rows
@@ -75,3 +77,20 @@ def get_telco_data(schema,u=uname,p=pwd,h=host):
         df.to_csv(filename,index=False)
         return df
 
+
+#----------------------------------------------------
+
+
+def get_sql_pull(schema,query,u=uname,p=pwd,h=host):
+    '''
+    returns the results of a mySQL query from a specified 
+    codeup schema as a pandas DF
+    '''
+    filename = f'{schema}.csv'
+    if os.path.isfile(filename):
+        return pd.read_csv(filename,index_col=False)
+    else:
+        url = get_sql_url(schema,u=u, p=p, h=h)
+        df = pd.read_sql(query, url)
+        df.to_csv(filename,index=False)
+        return df
